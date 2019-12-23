@@ -87,7 +87,7 @@ get_path(Opts) ->
     case proplists:get_value(path, Opts) of
         undefined ->
             Base = "/tmp/ST",
-            Name = integer_to_list(timestamp(erlang:now())),
+            Name = integer_to_list(erlang:system_time(microsecond)),
             filename:join(Base, Name);
         Path ->
             Path
@@ -151,8 +151,8 @@ store(Updates, State=?STATE{id=Id, db=DB}) ->
     _ = eleveldb:write(DB, DBUpdates, []),
     State.
 
-timestamp({Mega, Secs, Micro}) ->
-    Mega*1000*1000*1000*1000 + Secs * 1000 * 1000 + Micro.
+%timestamp({Mega, Secs, Micro}) ->
+    %Mega*1000*1000*1000*1000 + Secs * 1000 * 1000 + Micro.
 
 leveldb_opts() ->
     [{is_internal_db, true},
